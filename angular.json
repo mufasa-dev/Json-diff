@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "json-diff-app": {
+    "json-diff": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "json-diff-app:build:production"
+              "buildTarget": "json-diff:build:production"
             },
             "development": {
-              "buildTarget": "json-diff-app:build:development"
+              "buildTarget": "json-diff:build:development"
             }
           },
           "defaultConfiguration": "development"
