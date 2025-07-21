@@ -1,59 +1,59 @@
-# JsonDiffApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+# 🔍 JSON Diff Viewer with Angular
 
-## Development server
+Welcome to **JSON Diff Viewer** – an Angular-powered tool to quickly compare two JSON objects and highlight their differences! 🚀
 
-To start a local development server, run:
+---
+
+## ✨ Features
+- 📝 **Compare Two JSONs** – Find added, removed, or changed keys instantly.  
+- 🌈 **Color Highlighting** – Visual differences with clear color coding.  
+- 🔄 **Recursive Comparison** – Works with nested objects and arrays.  
+- ⚡ **Fast and Lightweight** – Built with Angular, no backend required.  
+- 🌐 **Ready for GitHub Pages** – Deploy as a static site with ease.
+
+---
+
+## 🚀 Live Demo
+*(Coming soon – after GitHub Pages deployment)*  
+[**View it here!**](https://mufasa-dev.github.io/Json-diff/)  
+
+---
+
+## 📦 Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/your-username/json-diff-app.git
+cd json-diff-app
+npm install
+````
+
+---
+
+## 🛠️ Development
+
+Run the app locally:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open your browser and go to:
+👉 **[http://localhost:4200/](http://localhost:4200/)**
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 👨‍💻 Author
 
-```bash
-ng generate component component-name
+Developed with ❤️ by **[Your Name](https://github.com/your-username)**
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+Feel free to use, modify, and share! 🎉
+
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
