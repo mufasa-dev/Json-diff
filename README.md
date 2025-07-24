@@ -1,4 +1,3 @@
-
 # 🔍 JSON Diff Viewer with Angular
 
 Welcome to **JSON Diff Viewer** – an Angular-powered tool to quickly compare two JSON objects and highlight their differences! 🚀 
