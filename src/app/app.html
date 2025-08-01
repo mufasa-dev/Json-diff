@@ -1,1 +1,13 @@
-<p class="text-xl text-red-600 font-semibold">Tailwind is working!</p>
+<div class="p-1">
+    <div class="flex flex-col items-center justify-center h-screen">
+        <h1 class="text-2xl font-bold mb-4">JSON Diff Viewer</h1>
+        <p class="text-gray-600 mb-8">Compare two JSON files to see the differences.</p>
+        <div class="w-full flex flex-row justify-center items-center gap-4 px-10 min-h-[500px]">
+            <app-json-textarea class="basis-2/5 h-full"></app-json-textarea>
+            <div class="flex flex-row justify-center items-center px-3 size-20 basis-1/5">
+                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Compare</button>
+            </div>
+            <app-json-textarea class="basis-2/5 h-full"></app-json-textarea>
+        </div>
+    </div>
+</div>
