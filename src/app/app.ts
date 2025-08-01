@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { JsonTextArea } from './json-textarea/json-textarea';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [JsonTextArea],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
