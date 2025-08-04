@@ -2,6 +2,8 @@
 
 Welcome to **JSON Diff Viewer** – an Angular-powered tool to quickly compare two JSON objects and highlight their differences! 🚀 
 
+[![My Skills](https://skillicons.dev/icons?i=angular,ts,html,scss,tailwind,vscode)](https://skillicons.dev)
+
 ---
 
 ## ✨ Features
