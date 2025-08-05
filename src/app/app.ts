@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { JsonTextArea } from './json-textarea/json-textarea';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,10 @@ export class App {
   public json2 = "";
 
   public showResult: boolean = false;
-  public diffHtml1: string = '';
-  public diffHtml2: string = '';
+  public diffHtml1: SafeHtml = '';
+  public diffHtml2: SafeHtml = '';
+
+  constructor(private sanitizer: DomSanitizer) {}
 
   public compareJsonLines(): void {
     const lines1 = this.json1.split('\n');
@@ -36,8 +39,8 @@ export class App {
     }
     console.log(lines1);
     console.log(result2);
-    this.diffHtml1 = result1;
-    this.diffHtml2 = result2;
+    this.diffHtml1 = this.sanitizer.bypassSecurityTrustHtml(result1);
+    this.diffHtml2 = this.sanitizer.bypassSecurityTrustHtml(result2);
     this.showResult = true;
   }
 }
