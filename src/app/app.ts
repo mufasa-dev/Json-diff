@@ -8,5 +8,6 @@ import { JsonTextArea } from './json-textarea/json-textarea';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('json-diff');
+  public json1 = "";
+  public json2 = "";
 }

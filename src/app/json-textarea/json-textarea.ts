@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,5 +7,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: '../app.scss'
 })
 export class JsonTextArea {
-  
+  @Input()  json: string = '';
 }
