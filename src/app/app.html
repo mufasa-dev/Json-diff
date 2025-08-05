@@ -4,11 +4,11 @@
         <p class="text-gray-600 mb-8">Compare two JSON files to see the differences.</p>
         @if (showResult) {
             <div class="w-full flex flex-row justify-center items-center gap-4 px-10 min-h-[500px]">
-                <div [innerHTML]="diffHtml1"></div>
+                <div class="w-full h-full p-2 border rounded ds" [innerHTML]="diffHtml1"></div>
                 <div class="flex flex-row justify-center items-center px-3 size-20 basis-1/5" (click)="showResult = false">
                     <button class="btn-primary">Back</button>
                 </div>
-                <div [innerHTML]="diffHtml1"></div>
+                <div class="w-full h-full p-2 border rounded ds" [innerHTML]="diffHtml1"></div>
             </div>
         } @else {
             <div class="w-full flex flex-row justify-center items-center gap-4 px-10 min-h-[500px]">
