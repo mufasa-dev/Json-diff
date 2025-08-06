@@ -1,1 +1,22 @@
-<textarea class="w-full h-full p-2 border rounded ds" placeholder="Enter JSON here..." (input)="onInput($event)">{{json}}</textarea>
+<div class="flex flex-col h-full">
+  <label class="mb-2">
+    <button type="button" 
+        class="btn-primary px-4 py-2 rounded shadow bg-green-600 text-white hover:bg-green-700 transition"
+        (click)="fileInput.click()">
+      Carregar JSON
+    </button>
+    <input
+      type="file"
+      accept=".json,application/json"
+      (change)="onFileSelected($event)"
+      class="hidden"
+      #fileInput
+    />
+  </label>
+  <textarea
+    class="w-full h-full p-2 border rounded ds flex-1"
+    placeholder="Enter JSON here..."
+    [value]="json"
+    (input)="onInput($event)"
+  ></textarea>
+</div>
