@@ -1,0 +1,16 @@
+{
+  "nome": "Bruno",
+  "idade": 30,
+  "cidade": "São Paulo",
+  "ativo": true,
+  "enderecos": [
+    {
+      "rua": "Rua A",
+      "numero": 100
+    }
+  ],
+  "contatos": {
+    "email": "bruno@email.com",
+    "telefone": "12345678"
+  }
+}

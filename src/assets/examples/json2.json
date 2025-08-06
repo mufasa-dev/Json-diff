@@ -1,0 +1,21 @@
+{
+  "nome": "Bruno",
+  "idade": 31,
+  "cidade": "Rio de Janeiro",
+  "ativo": false,
+  "enderecos": [
+    {
+      "rua": "Rua A",
+      "numero": 100
+    },
+    {
+      "rua": "Rua B",
+      "numero": 200
+    }
+  ],
+  "contatos": {
+    "email": "bruno@email.com",
+    "telefone": "87654321"
+  },
+  "profissao": "Desenvolvedor"
+}
