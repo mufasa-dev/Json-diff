@@ -40,24 +40,28 @@ export class App {
       if (val1 === undefined) {
         // Adicionado
         result1 += `<div></div>`;
-        result2 += `<div style="background-color: #b6fcb6">"${key}": ${JSON.stringify(val2)}</div>`;
+        result2 += `<div style="background-color: #b6fcb6"><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`;
       } else if (val2 === undefined) {
         // Removido
-        result1 += `<div style="background-color: #ffb6b6">"${key}": ${JSON.stringify(val1)}</div>`;
+        result1 += `<div style="background-color: #ffb6b6"><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`;
         result2 += `<div></div>`;
       } else if (JSON.stringify(val1) === JSON.stringify(val2)) {
         // Igual
-        result1 += `<div>"${key}": ${JSON.stringify(val1)}</div>`;
-        result2 += `<div>"${key}": ${JSON.stringify(val2)}</div>`;
+        result1 += `<div><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`;
+        result2 += `<div><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`;
       } else {
         // Modificado
-        result1 += `<div style="background-color: #ffe9b6">"${key}": ${JSON.stringify(val1)}</div>`;
-        result2 += `<div style="background-color: #ffe9b6">"${key}": ${JSON.stringify(val2)}</div>`;
+        result1 += `<div style="background-color: #ffe9b6"><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`;
+        result2 += `<div style="background-color: #ffe9b6"><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`;
       }
     }
 
-    this.diffHtml1 = this.sanitizer.bypassSecurityTrustHtml(result1);
-    this.diffHtml2 = this.sanitizer.bypassSecurityTrustHtml(result2);
+    this.diffHtml1 = this.sanitizer.bypassSecurityTrustHtml(
+      `<pre>{</pre><div class="pl-5">${result1}</div><pre>}</pre>`
+    );
+    this.diffHtml2 = this.sanitizer.bypassSecurityTrustHtml(
+      `<pre>{</pre><div class="pl-5">${result2}</div><pre>}</pre>`
+    );
     this.showResult = true;
   }
 }
