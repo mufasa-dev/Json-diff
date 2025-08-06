@@ -19,26 +19,43 @@ export class App {
   constructor(private sanitizer: DomSanitizer) {}
 
   public compareJsonLines(): void {
-    const lines1 = this.json1.split('\n');
-    const lines2 = this.json2.split('\n');
-    const maxLength = Math.max(lines1.length, lines2.length);
+    let obj1: any, obj2: any;
+    try {
+      obj1 = JSON.parse(this.json1);
+      obj2 = JSON.parse(this.json2);
+    } catch (e) {
+      this.diffHtml1 = 'JSON inválido';
+      this.diffHtml2 = 'JSON inválido';
+      this.showResult = true;
+      return;
+    }
 
+    const allKeys = Array.from(new Set([...Object.keys(obj1), ...Object.keys(obj2)]));
     let result1 = '';
     let result2 = '';
 
-    for (let i = 0; i < maxLength; i++) {
-      const line1 = lines1[i] ?? '';
-      const line2 = lines2[i] ?? '';
-      if (line1 === line2) {
-        result1 += `<div>${line1}</div>`;
-        result2 += `<div>${line2}</div>`;
+    for (const key of allKeys) {
+      const val1 = obj1[key];
+      const val2 = obj2[key];
+      if (val1 === undefined) {
+        // Adicionado
+        result1 += `<div></div>`;
+        result2 += `<div style="background-color: #b6fcb6">"${key}": ${JSON.stringify(val2)}</div>`;
+      } else if (val2 === undefined) {
+        // Removido
+        result1 += `<div style="background-color: #ffb6b6">"${key}": ${JSON.stringify(val1)}</div>`;
+        result2 += `<div></div>`;
+      } else if (JSON.stringify(val1) === JSON.stringify(val2)) {
+        // Igual
+        result1 += `<div>"${key}": ${JSON.stringify(val1)}</div>`;
+        result2 += `<div>"${key}": ${JSON.stringify(val2)}</div>`;
       } else {
-        result1 += `<div style="background-color: #a5ffb0">${line1}</div>`;
-        result2 += `<div style="background-color: #a5ffb0">${line2}</div>`;
+        // Modificado
+        result1 += `<div style="background-color: #ffe9b6">"${key}": ${JSON.stringify(val1)}</div>`;
+        result2 += `<div style="background-color: #ffe9b6">"${key}": ${JSON.stringify(val2)}</div>`;
       }
     }
-    console.log(lines1);
-    console.log(result2);
+
     this.diffHtml1 = this.sanitizer.bypassSecurityTrustHtml(result1);
     this.diffHtml2 = this.sanitizer.bypassSecurityTrustHtml(result2);
     this.showResult = true;
