@@ -45,7 +45,7 @@ Open your browser and go to:
 
 ## 👨‍💻 Author
 
-Developed with ❤️ by **[Your Name](https://github.com/your-username)**
+Developed with ❤️ by **[Bruno](https://github.com/mufasa-dev)**
 
 
 ## 📜 License
