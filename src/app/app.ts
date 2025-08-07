@@ -18,6 +18,78 @@ export class App {
 
   constructor(private sanitizer: DomSanitizer) {}
 
+  private formatDiff(key: string, val1: any, val2: any): { left: string, right: string } {
+    // Se for array de objetos
+    if (Array.isArray(val1) && Array.isArray(val2)) {
+      let leftArr = '';
+      let rightArr = '';
+      const maxLen = Math.max(val1.length, val2.length);
+      for (let i = 0; i < maxLen; i++) {
+        const item1 = val1[i];
+        const item2 = val2[i];
+        if (item1 && item2) {
+          // Recursivo para objetos dentro do array
+          if (JSON.stringify(item1) === JSON.stringify(item2)) {
+            leftArr += `<div><pre>${JSON.stringify(item1, null, 2)}</pre></div>`;
+            rightArr += `<div><pre>${JSON.stringify(item2, null, 2)}</pre></div>`;
+          } else {
+            leftArr += `<div style="background-color: #ffe9b6; color: #92400e;"><pre>${JSON.stringify(item1, null, 2)}</pre></div>`;
+            rightArr += `<div style="background-color: #ffe9b6; color: #92400e;"><pre>${JSON.stringify(item2, null, 2)}</pre></div>`;
+          }
+        } else if (item1 && !item2) {
+          leftArr += `<div style="background-color: #ffb6b6; color: #991b1b;"><pre>${JSON.stringify(item1, null, 2)}</pre></div>`;
+        } else if (!item1 && item2) {
+          rightArr += `<div style="background-color: #b6fcb6; color: #065f46;"><pre>${JSON.stringify(item2, null, 2)}</pre></div>`;
+        }
+      }
+      return {
+        left: `<div><pre>"${key}": [\n</pre><div class="pl-5">${leftArr}</div><pre>]</pre></div>`,
+        right: `<div><pre>"${key}": [\n</pre><div class="pl-5">${rightArr}</div><pre>]</pre></div>`
+      };
+    }
+
+    // Se for objeto
+    if (typeof val1 === 'object' && typeof val2 === 'object' && val1 && val2) {
+      const allKeys = Array.from(new Set([...Object.keys(val1), ...Object.keys(val2)]));
+      let leftObj = '';
+      let rightObj = '';
+      for (const subKey of allKeys) {
+        const subVal1 = val1[subKey];
+        const subVal2 = val2[subKey];
+        const diff = this.formatDiff(subKey, subVal1, subVal2);
+        leftObj += diff.left;
+        rightObj += diff.right;
+      }
+      return {
+        left: `<div><pre>"${key}": {\n</pre><div class="pl-5">${leftObj}</div><pre>}</pre></div>`,
+        right: `<div><pre>"${key}": {\n</pre><div class="pl-5">${rightObj}</div><pre>}</pre></div>`
+      };
+    }
+
+    // Primitivos
+    if (val1 === undefined) {
+      return {
+        left: `<div></div>`,
+        right: `<div style="background-color: #b6fcb6; color: #065f46;"><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`
+      };
+    } else if (val2 === undefined) {
+      return {
+        left: `<div style="background-color: #ffb6b6; color: #991b1b;"><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`,
+        right: `<div></div>`
+      };
+    } else if (JSON.stringify(val1) === JSON.stringify(val2)) {
+      return {
+        left: `<div><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`,
+        right: `<div><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`
+      };
+    } else {
+      return {
+        left: `<div style="background-color: #ffe9b6; color: #92400e;"><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`,
+        right: `<div style="background-color: #ffe9b6; color: #92400e;"><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`
+      };
+    }
+  }
+
   public compareJsonLines(): void {
     let obj1: any, obj2: any;
     try {
@@ -37,23 +109,9 @@ export class App {
     for (const key of allKeys) {
       const val1 = obj1[key];
       const val2 = obj2[key];
-      if (val1 === undefined) {
-        // Adicionado
-        result1 += `<div></div>`;
-        result2 += `<div style="background-color: #b6fcb6; color: #065f46;"><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`;
-      } else if (val2 === undefined) {
-        // Removido
-        result1 += `<div style="background-color: #ffb6b6; color: #991b1b;"><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`;
-        result2 += `<div></div>`;
-      } else if (JSON.stringify(val1) === JSON.stringify(val2)) {
-        // Igual
-        result1 += `<div><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`;
-        result2 += `<div><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`;
-      } else {
-        // Modificado
-        result1 += `<div style="background-color: #ffe9b6; color: #92400e;"><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`;
-        result2 += `<div style="background-color: #ffe9b6; color: #92400e;"><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`;
-      }
+      const diff = this.formatDiff(key, val1, val2);
+      result1 += diff.left;
+      result2 += diff.right;
     }
 
     this.diffHtml1 = this.sanitizer.bypassSecurityTrustHtml(
