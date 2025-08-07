@@ -26,7 +26,7 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/mufasa-dev/Json-diff.git
-cd json-diff-app
+cd Json-diff
 npm install
 ````
 
