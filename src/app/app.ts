@@ -90,12 +90,23 @@ export class App {
     }
   }
 
-  public compareJsonLines(): void {
-    let obj1: any, obj2: any;
+  public tryParse = (input: string) => {
     try {
-      obj1 = JSON.parse(this.json1);
-      obj2 = JSON.parse(this.json2);
-    } catch (e) {
+      return JSON.parse(input);
+    } catch {
+      try {
+        const parsed = new Function(`return (${input})`)();
+        return JSON.parse(JSON.stringify(parsed));
+      } catch {
+        return null;
+      }
+    }
+  };
+
+  public compareJsonLines(): void {
+    let obj1 = this.tryParse(this.json1);
+    let obj2 = this.tryParse(this.json2);
+    if (!obj1 || !obj2) {
       this.diffHtml1 = 'JSON inválido';
       this.diffHtml2 = 'JSON inválido';
       this.showResult = true;
