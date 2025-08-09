@@ -5,7 +5,8 @@ Welcome to **JSON Diff Viewer** – an Angular-powered tool to quickly compare t
 [![My Skills](https://skillicons.dev/icons?i=angular,ts,html,tailwind,vscode)](https://skillicons.dev)
 
 ## ✨ Features
-- 📝 **Compare Two JSONs** – Find added, removed, or changed keys instantly.  
+- 📝 **Compare Two JSONs** – Find added, removed, or changed keys instantly.
+- 📦 Support for JavaScript & TypeScript objects – Parse and compare exported objects or classes directly.
 - 🌈 **Color Highlighting** – Visual differences with clear color coding.  
 - 🔄 **Recursive Comparison** – Works with nested objects and arrays.  
 - ⚡ **Fast and Lightweight** – Built with Angular, no backend required.  
