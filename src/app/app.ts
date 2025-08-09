@@ -91,15 +91,28 @@ export class App {
   }
 
   public tryParse = (input: string) => {
+    input = input.trim();
+
     try {
       return JSON.parse(input);
-    } catch {
+    } catch {}
+
+    const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w*\s*=\s*(\{[\s\S]*\});?$/m;
+    const match = input.match(exportRegex);
+    if (match) {
       try {
-        const parsed = new Function(`return (${input})`)();
-        return JSON.parse(JSON.stringify(parsed));
+        return JSON.parse(
+          JSON.stringify(eval(`(${match[1]})`)) // Avalia apenas o objeto
+        );
       } catch {
         return null;
       }
+    }
+
+    try {
+      return JSON.parse(JSON.stringify(eval(`(${input})`)));
+    } catch {
+      return null;
     }
   };
 
