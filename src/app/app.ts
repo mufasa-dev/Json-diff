@@ -97,24 +97,29 @@ export class App {
       return JSON.parse(input);
     } catch {}
 
-    const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w+(?:\s*:\s*[\w<>,\s\[\]\?]+)?\s*=\s*(\{[\s\S]*?\});/m;
+    const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w+(?:\s*:\s*[\w<>,\s\[\]\?]+)?\s*=\s*(\{[\s\S]*?\})\s*(?:;|$)/m;
     const match = input.match(exportRegex);
+    
     if (match) {
       try {
-        return JSON.parse(
-          JSON.stringify(eval(`(${match[1]})`)) // Avalia apenas o objeto
-        );
+        return this.safeParseObject(match[1]);
       } catch {
         return null;
       }
     }
 
     try {
-      return JSON.parse(JSON.stringify(eval(`(${input})`)));
+      return this.safeParseObject(input);
     } catch {
       return null;
     }
   };
+
+  public safeParseObject(input: string) {
+    return JSON.parse(JSON.stringify(
+      new Function(`return (${input})`)()
+    ));
+  }
 
   public compareJsonLines(): void {
     let obj1 = this.tryParse(this.json1);
