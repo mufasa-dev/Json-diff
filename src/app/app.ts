@@ -98,11 +98,12 @@ export class App {
       return JSON.parse(input);
     } catch {}
 
-    const match = this.getExportedObjects(input);
+    const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w+(?:\s*:\s*[\w<>,\s\[\]\?]+)?\s*=\s*(\{[\s\S]*\})\s*(?:;|$)/m;
+    const match = input.match(exportRegex);
     
     if (match) {
       try {
-        return this.safeParseObject(match[0]);
+        return this.safeParseObject(match[1]);
       } catch {
         return null;
       }
@@ -120,25 +121,6 @@ export class App {
       new Function(`return (${input})`)()
     ));
   }
-
-  public getExportedObjects(code: string) {
-      const sourceFile = ts.createSourceFile("temp.ts", code, ts.ScriptTarget.Latest);
-      const results: string[] = [];
-
-      ts.forEachChild(sourceFile, node => {
-        if (ts.isVariableStatement(node)) {
-          for (const declaration of node.declarationList.declarations) {
-            if (declaration.initializer && ts.isObjectLiteralExpression(declaration.initializer)) {
-              results.push(
-                code.substring(declaration.initializer.pos, declaration.initializer.end)
-              );
-            }
-          }
-        }
-      });
-
-      return results;
-    }
 
   public compareJsonLines(): void {
     let obj1 = this.tryParse(this.json1);
