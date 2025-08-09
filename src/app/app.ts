@@ -44,8 +44,8 @@ export class App {
         }
       }
       return {
-        left: `<div><pre>"${key}": [\n</pre><div class="pl-5">${leftArr}</div><pre>]</pre></div>`,
-        right: `<div><pre>"${key}": [\n</pre><div class="pl-5">${rightArr}</div><pre>]</pre></div>`
+        left: `<div><pre>"${key}": [\n</pre><div class="pl-5 w-fit">${leftArr}</div><pre>]</pre></div>`,
+        right: `<div><pre>"${key}": [\n</pre><div class="pl-5 w-fit">${rightArr}</div><pre>]</pre></div>`
       };
     }
 
@@ -62,8 +62,8 @@ export class App {
         rightObj += diff.right;
       }
       return {
-        left: `<div><pre>"${key}": {\n</pre><div class="pl-5">${leftObj}</div><pre>}</pre></div>`,
-        right: `<div><pre>"${key}": {\n</pre><div class="pl-5">${rightObj}</div><pre>}</pre></div>`
+        left: `<div><pre>"${key}": {\n</pre><div class="pl-5 w-fit">${leftObj}</div><pre>}</pre></div>`,
+        right: `<div><pre>"${key}": {\n</pre><div class="pl-5 w-fit">${rightObj}</div><pre>}</pre></div>`
       };
     }
 
@@ -145,10 +145,10 @@ export class App {
     }
 
     this.diffHtml1 = this.sanitizer.bypassSecurityTrustHtml(
-      `<pre>{</pre><div class="pl-5">${result1}</div><pre>}</pre>`
+      `<pre>{</pre><div class="pl-5 w-fit">${result1}</div><pre>}</pre>`
     );
     this.diffHtml2 = this.sanitizer.bypassSecurityTrustHtml(
-      `<pre>{</pre><div class="pl-5">${result2}</div><pre>}</pre>`
+      `<pre>{</pre><div class="pl-5 w-fit">${result2}</div><pre>}</pre>`
     );
     this.showResult = true;
   }
