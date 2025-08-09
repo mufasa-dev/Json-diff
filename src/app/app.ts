@@ -97,7 +97,7 @@ export class App {
       return JSON.parse(input);
     } catch {}
 
-    const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w*\s*=\s*(\{[\s\S]*\});?$/m;
+    const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w+(?:\s*:\s*[\w<>,\s\[\]\?]+)?\s*=\s*(\{[\s\S]*?\});/m;
     const match = input.match(exportRegex);
     if (match) {
       try {
