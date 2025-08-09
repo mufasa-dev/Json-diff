@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { JsonTextArea } from './json-textarea/json-textarea';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import ts from "typescript";
 
 @Component({
   selector: 'app-root',
@@ -97,12 +98,11 @@ export class App {
       return JSON.parse(input);
     } catch {}
 
-    const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w+(?:\s*:\s*[\w<>,\s\[\]\?]+)?\s*=\s*(\{[\s\S]*?\})\s*(?:;|$)/m;
-    const match = input.match(exportRegex);
+    const match = this.getExportedObjects(input);
     
     if (match) {
       try {
-        return this.safeParseObject(match[1]);
+        return this.safeParseObject(match[0]);
       } catch {
         return null;
       }
@@ -121,12 +121,31 @@ export class App {
     ));
   }
 
+  public getExportedObjects(code: string) {
+      const sourceFile = ts.createSourceFile("temp.ts", code, ts.ScriptTarget.Latest);
+      const results: string[] = [];
+
+      ts.forEachChild(sourceFile, node => {
+        if (ts.isVariableStatement(node)) {
+          for (const declaration of node.declarationList.declarations) {
+            if (declaration.initializer && ts.isObjectLiteralExpression(declaration.initializer)) {
+              results.push(
+                code.substring(declaration.initializer.pos, declaration.initializer.end)
+              );
+            }
+          }
+        }
+      });
+
+      return results;
+    }
+
   public compareJsonLines(): void {
     let obj1 = this.tryParse(this.json1);
     let obj2 = this.tryParse(this.json2);
     if (!obj1 || !obj2) {
-      this.diffHtml1 = 'JSON inválido';
-      this.diffHtml2 = 'JSON inválido';
+      this.diffHtml1 = 'Invalid JSON';
+      this.diffHtml2 = 'Invalid JSON';
       this.showResult = true;
       return;
     }
