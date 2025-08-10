@@ -39,7 +39,9 @@ export class App {
           }
         } else if (item1 && !item2) {
           leftArr += `<div style="background-color: #ffb6b6; color: #991b1b;"><pre>${JSON.stringify(item1, null, 2)}</pre></div>`;
+          rightArr += `<div style="background-color: #ffb6b6; color: #065f46;"><pre style="opacity: 0">${JSON.stringify(item1, null, 2)}</pre></div>`;
         } else if (!item1 && item2) {
+          leftArr += `<div style="background-color: #b6fcb6; color: #991b1b;"><pre style="opacity: 0">${JSON.stringify(item2, null, 2)}</pre></div>`;
           rightArr += `<div style="background-color: #b6fcb6; color: #065f46;"><pre>${JSON.stringify(item2, null, 2)}</pre></div>`;
         }
       }
@@ -70,13 +72,13 @@ export class App {
     // Primitivos
     if (val1 === undefined) {
       return {
-        left: `<div></div>`,
+        left: `<div style="background-color: #b6fcb6; color: #065f46"><pre style="opacity: 0">${JSON.stringify(val2, null, 2)}</pre></div>`,
         right: `<div style="background-color: #b6fcb6; color: #065f46;"><pre>"${key}": ${JSON.stringify(val2, null, 2)}</pre></div>`
       };
     } else if (val2 === undefined) {
       return {
         left: `<div style="background-color: #ffb6b6; color: #991b1b;"><pre>"${key}": ${JSON.stringify(val1, null, 2)}</pre></div>`,
-        right: `<div></div>`
+        right: `<div style="background-color: #ffb6b6; color: #991b1b;"><pre style="opacity: 0">${JSON.stringify(val1, null, 2)}</pre></div>`
       };
     } else if (JSON.stringify(val1) === JSON.stringify(val2)) {
       return {
