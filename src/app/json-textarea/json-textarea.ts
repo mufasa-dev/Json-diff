@@ -21,20 +21,36 @@ export class JsonTextArea {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       const reader = new FileReader();
+
       reader.onload = () => {
         try {
-          const text = reader.result as string;
+          let text = reader.result as string;
+
+          if (/\.(ts|js)$/i.test(file.name)) {
+            const exportRegex = /export\s+(?:const|default|class|let|var)\s+\w+(?:\s*:\s*[\w<>,\s\[\]\?]+)?\s*=\s*(\{[\s\S]*\})\s*(?:;|$)/m;
+            const match = text.match(exportRegex);
+
+            if (!match) {
+              throw new Error('No exported objects found in the file.');
+            }
+
+            text = match[1];
+          }
+
           JSON.parse(text);
+
           this.jsonChange.emit(text);
-          // Limpa o input file após o upload
+
           if (this.fileInput) {
             this.fileInput.nativeElement.value = '';
           }
-        } catch {
-          alert('Arquivo JSON inválido!');
+        } catch (err) {
+          alert(`Invalid file: ${(err as Error).message}`);
         }
       };
+
       reader.readAsText(file);
     }
   }
+
 }
